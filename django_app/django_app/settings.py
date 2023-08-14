@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'drf_social_oauth2',
     'oauth2_provider',
+    'rest_framework_simplejwt',
     'social_django',
 ]
 
