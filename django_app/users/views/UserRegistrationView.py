@@ -26,5 +26,19 @@ class UserRegistrationView(CreateAPIView):
         })
         token_serializer.is_valid(raise_exception=True)
 
-        return Response(token_serializer.validated_data,
-                        status=status.HTTP_201_CREATED)
+        response = Response()
+
+        response.data = token_serializer.validated_data
+        response.status_code = status.HTTP_201_CREATED
+
+        response.set_cookie(**{
+            'key': 'refresh',
+            'value': response.data['refresh'],
+            'path': '/api/users/token/',
+            'domain': None,
+            'secure': True,
+            'httponly': True,
+            'samesite': 'strict',
+        })
+
+        return response
