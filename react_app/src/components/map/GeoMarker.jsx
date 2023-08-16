@@ -5,7 +5,11 @@ import {Spinner} from "react-bootstrap";
 
 const GeoMarker = (props) => {
     const data = props.data;
-    const {geo_position: {coordinates: position}} = data;
+    const {
+        geo_position: {
+            coordinates: position,
+        }
+    } = data;
 
     const [currentWeather, setCurrentWeather] = useState();
     const [currentElevation, setCurrentElevation] = useState();

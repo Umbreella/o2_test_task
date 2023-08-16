@@ -7,7 +7,9 @@ import RegUserForm from "../forms/RegUserForm";
 
 const AuthUserModal = (props) => {
     const {
-        data: {show},
+        data: {
+            show,
+        },
         func: {
             handleClose,
         },

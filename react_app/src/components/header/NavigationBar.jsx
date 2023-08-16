@@ -7,7 +7,7 @@ import {Context} from "../../index";
 import {NavLink} from "react-router-dom";
 import AuthUserModal from "../modals/AuthUserModal";
 
-const NavBar = observer((props) => {
+const NavigationBar = observer((props) => {
     const {
         func: {
             setRoadRouteGeoPoints,
@@ -76,4 +76,4 @@ const NavBar = observer((props) => {
     );
 });
 
-export default NavBar;
+export default NavigationBar;

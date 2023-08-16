@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import NavBar from "../header/NavBar";
+import NavigationBar from "../header/NavigationBar";
 import MapPage from "../map/MapPage";
 import {Container} from "react-bootstrap";
 
@@ -11,7 +11,7 @@ const MainPage = () => {
 
     return (
         <>
-            <NavBar func={{
+            <NavigationBar func={{
                 setRoadRouteGeoPoints,
                 setGasStationList,
                 setTotalDistance,
