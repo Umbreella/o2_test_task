@@ -33,12 +33,19 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.gis',
 
+    'drf_yasg',
     'corsheaders',
-    'drf_social_oauth2',
-    'oauth2_provider',
+    'import_export',
+    'leaflet',
+    'rest_framework',
+    'rest_framework_gis',
     'rest_framework_simplejwt',
-    'social_django',
+    'rest_framework_simplejwt.token_blacklist',
+
+    'road_routes',
+    'users',
 ]
 
 MIDDLEWARE = [
@@ -84,22 +91,6 @@ DATABASES = {
     },
 }
 
-SOCIAL_AUTH_JSONFIELD_ENABLED = True
-
-DRFSO2_URL_NAMESPACE = 'drf'
-DRFSO2_PROPRIETARY_BACKEND_NAME = 'GoogleOAuth2'
-
-SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = (
-    config.get('DJANGO_APP_SOCIAL_AUTH_GOOGLE_OAUTH2_KEY')
-)
-SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = (
-    config.get('DJANGO_APP_SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET')
-)
-SOCIAL_AUTH_GOOGLE_OAUTH2_SCOPE = [
-    'https://www.googleapis.com/auth/userinfo.email',
-    'https://www.googleapis.com/auth/userinfo.profile',
-]
-
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': ''.join((
@@ -124,12 +115,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-AUTHENTICATION_BACKENDS = (
-    'social_core.backends.google.GoogleOAuth2',
-    'drf_social_oauth2.backends.DjangoOAuth2',
-    'django.contrib.auth.backends.ModelBackend',
-)
-
 LANGUAGE_CODE = 'en-us'
 
 TIME_ZONE = 'UTC'
@@ -142,10 +127,10 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+AUTH_USER_MODEL = 'users.User'
+
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        'oauth2_provider.contrib.rest_framework.OAuth2Authentication',
-        'drf_social_oauth2.authentication.SocialAuthentication',
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),
 }
