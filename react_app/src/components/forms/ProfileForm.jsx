@@ -21,6 +21,7 @@ const ProfileForm = (props) => {
     const {user} = useContext(Context);
     const [initUserData, setInitUserData] = useState();
     const [isPostedLoginRequest, setIsPostedLoginRequest] = useState(false);
+    const [isVisiblePassword, setIsVisiblePassword] = useState(false);
     const navigate = useNavigate();
 
     const refreshAccessToken = async () => {
@@ -59,6 +60,9 @@ const ProfileForm = (props) => {
             return null;
         }
 
+        setIsVisiblePassword(data.can_change_password);
+        delete data.can_change_password;
+
         setInitUserData(data);
     }
 
@@ -95,7 +99,7 @@ const ProfileForm = (props) => {
 
     useEffect(() => {
         loadUserProfile().then();
-    })
+    }, [])
 
     const schema = yup.object().shape({
         email: yup.string()
@@ -200,25 +204,29 @@ const ProfileForm = (props) => {
                                         {errors.username}
                                     </Form.Control.Feedback>
                                 </Form.Group>
-                                <Form.Group className="mb-3">
-                                    <Form.Label>
-                                        Пароль
-                                    </Form.Label>
-                                    <Form.Control
-                                        type="password"
-                                        id="password"
-                                        placeholder="Введите новый пароль"
-                                        value={values.password}
-                                        onChange={handleChange}
-                                        isValid={
-                                            touched.password && !errors.password
-                                        }
-                                        isInvalid={!!errors.password}
-                                    />
-                                    <Form.Control.Feedback type="invalid">
-                                        {errors.password}
-                                    </Form.Control.Feedback>
-                                </Form.Group>
+
+                                {
+                                    isVisiblePassword &&
+                                    <Form.Group className="mb-3">
+                                        <Form.Label>
+                                            Пароль
+                                        </Form.Label>
+                                        <Form.Control
+                                            type="password"
+                                            id="password"
+                                            placeholder="Введите новый пароль"
+                                            value={values.password}
+                                            onChange={handleChange}
+                                            isValid={
+                                                touched.password && !errors.password
+                                            }
+                                            isInvalid={!!errors.password}
+                                        />
+                                        <Form.Control.Feedback type="invalid">
+                                            {errors.password}
+                                        </Form.Control.Feedback>
+                                    </Form.Group>
+                                }
                                 <div
                                     className="d-flex flex-column justify-content-center text-center">
                                     {

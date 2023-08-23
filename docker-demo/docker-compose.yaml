@@ -1,0 +1,11 @@
+version: "3"
+
+services:
+  o2_test_task:
+    image: umbreella/o2_test_task:latest
+    container_name: o2_test_task
+    ports:
+      - "80:80"
+    privileged: true
+    env_file:
+      - .env.docker

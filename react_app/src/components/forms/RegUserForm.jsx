@@ -151,7 +151,7 @@ const RegUserForm = () => {
                                 <Form.Control
                                     type="password"
                                     id="password"
-                                    placeholder="Введите новый пароль"
+                                    placeholder="Введите пароль"
                                     value={values.password}
                                     onChange={handleChange}
                                     isValid={

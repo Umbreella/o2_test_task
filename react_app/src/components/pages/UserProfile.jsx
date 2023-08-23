@@ -45,7 +45,8 @@ const UserProfile = () => {
                                     <Spinner animation="border"/>
                                 </div> :
                                 <Container>
-                                    <div className="d-flex justify-content-between my-3">
+                                    <div
+                                        className="d-flex justify-content-between my-3">
                                         <Button
                                             onClick={() => navigate(MAIN_ROUTE)}>
                                             Вернуться

@@ -31,4 +31,6 @@ COPY configs/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
 COPY configs/backup.sql backup.sql
 
+EXPOSE 80
+
 CMD ["/usr/bin/supervisord"]

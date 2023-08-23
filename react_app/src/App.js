@@ -1,44 +1,20 @@
-import React, {useContext, useEffect} from "react";
+import React from "react";
 import MainRoute from "./components/routes/MainRoute";
-import {Context} from "./index";
-import {getCheckAuthIsValid, postRefreshTokenForRefresh} from "./http/UserAPI";
+import TechRoute from "./components/routes/TechRoute";
+import {techRoutes} from "./utils/routes";
+import {useLocation} from "react-router-dom";
 
 function App() {
-    const {user} = useContext(Context);
-
-    const refreshAccessToken = async () => {
-        const {
-            data: {
-                access: accessToken,
-            },
-            status: access_status,
-        } = await postRefreshTokenForRefresh();
-
-        if (access_status !== 200) {
-            user.removeAccessToken();
-            return false;
-        }
-
-        user.setAccessToken(accessToken);
-        return true;
-    }
-
-    useEffect(() => {
-        getCheckAuthIsValid()
-            .then(
-                ({status}) => {
-                    if (status !== 200) {
-                        refreshAccessToken().then();
-                    }
-
-                    user.setIsAuth(true);
-                }
-            )
-    })
+    const {pathname} = useLocation();
+    const isTechPage = techRoutes.some(() => pathname.startsWith('/oauth/complete/'));
 
     return (
         <>
-            <MainRoute/>
+            {
+                isTechPage ?
+                    <TechRoute/> :
+                    <MainRoute/>
+            }
         </>
     );
 }

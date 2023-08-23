@@ -1,6 +1,7 @@
 from django.conf import settings
 from django.http import QueryDict
 from drf_social_oauth2.views import ConvertTokenView
+from rest_framework import status
 from rest_framework.permissions import AllowAny
 
 from ..serializers.GithubUserLoginSerializer import GithubUserLoginSerializer
@@ -27,6 +28,9 @@ class GithubUserLoginView(ConvertTokenView):
         })
 
         response = super().post(request, *args, **kwargs)
+
+        if response.status_code != status.HTTP_200_OK:
+            return response
 
         response.data = {
             'access': response.data['access_token'],
