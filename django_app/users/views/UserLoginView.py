@@ -8,7 +8,7 @@ class UserLoginView(TokenObtainPairView):
         response.set_cookie(**{
             'key': 'refresh',
             'value': response.data['refresh'],
-            'path': '/api/users/token/',
+            'path': '/api/users/token',
             'domain': None,
             'secure': True,
             'httponly': True,

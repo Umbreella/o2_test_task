@@ -44,6 +44,10 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt',
     'rest_framework_simplejwt.token_blacklist',
 
+    'oauth2_provider',
+    'social_django',
+    'drf_social_oauth2',
+
     'road_routes',
     'users',
 ]
@@ -57,7 +61,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'users.middleware.CookiesMiddleware.CookiesMiddleware',
 ]
 
 ROOT_URLCONF = 'django_app.urls'
@@ -73,6 +76,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'social_django.context_processors.backends',
+                'social_django.context_processors.login_redirect',
             ],
         },
     },
@@ -130,9 +135,35 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'users.User'
 
+ACTIVATE_JWT = True
+
+SOCIAL_AUTH_JSONFIELD_ENABLED = True
+
+SOCIAL_AUTH_URL_NAMESPACE = 'social'
+
+SOCIAL_AUTH_GITHUB_KEY = config.get('DJANGO_APP_SOCIAL_AUTH_GITHUB_KEY')
+SOCIAL_AUTH_GITHUB_SECRET = config.get('DJANGO_APP_SOCIAL_AUTH_GITHUB_SECRET')
+
+APPLICATION_GITHUB_CLIENT_ID = (
+    config.get('DJANGO_APP_APPLICATION_GITHUB_CLIENT_ID')
+)
+APPLICATION_GITHUB_CLIENT_SECRET = (
+    config.get('DJANGO_APP_APPLICATION_GITHUB_CLIENT_SECRET')
+)
+
+AUTHENTICATION_BACKENDS = (
+    'social_core.backends.google.GoogleOAuth2',
+    'social_core.backends.google.GoogleOAuth',
+    'social_core.backends.github.GithubOAuth2',
+    'drf_social_oauth2.backends.DjangoOAuth2',
+    'django.contrib.auth.backends.ModelBackend',
+)
+
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
+        'oauth2_provider.contrib.rest_framework.OAuth2Authentication',
         'rest_framework_simplejwt.authentication.JWTAuthentication',
+        'drf_social_oauth2.authentication.SocialAuthentication',
     ),
 }
 
@@ -171,10 +202,9 @@ SIMPLE_JWT = {
     'SLIDING_TOKEN_LIFETIME': timedelta(minutes=5),
     'SLIDING_TOKEN_REFRESH_LIFETIME': timedelta(days=1),
 
-    'TOKEN_OBTAIN_SERIALIZER': ''.join((
-        'users.serializers.CustomTokenObtainPairSerializer.',
-        'CustomTokenObtainPairSerializer',
-    )),
+    'TOKEN_OBTAIN_SERIALIZER': (
+        'rest_framework_simplejwt.serializers.TokenObtainPairSerializer'
+    ),
     'TOKEN_REFRESH_SERIALIZER': (
         'rest_framework_simplejwt.serializers.TokenRefreshSerializer'
     ),

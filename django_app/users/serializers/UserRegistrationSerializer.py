@@ -1,7 +1,7 @@
-from .CustomTokenObtainPairSerializer import CustomTokenObtainPairSerializer
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
 
-class UserRegistrationSerializer(CustomTokenObtainPairSerializer):
+class UserRegistrationSerializer(TokenObtainPairSerializer):
     def validate(self, attrs):
         refresh = self.get_token(self.instance)
 
