@@ -19,7 +19,7 @@ const MapPage = (props) => {
     return (
         <Container>
             <Col style={{height: "75vh"}}>
-                <MapContainer center={[51.505, -0.09]} zoom={1}
+                <MapContainer center={[56.010052, 92.852600]} zoom={3}
                               scrollWheelZoom={false}>
                     <TileLayer
                         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'

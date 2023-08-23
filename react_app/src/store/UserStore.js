@@ -3,7 +3,6 @@ import {makeAutoObservable} from "mobx";
 export default class UserStore {
     constructor(props) {
         this._isAuth = false;
-        this._username = 'Username';
         this._authType = undefined;
         makeAutoObservable(this);
     }
@@ -16,19 +15,13 @@ export default class UserStore {
         return this._isAuth;
     }
 
-    setUsername(username) {
-        this._username = username;
+    setAccessToken(accessToken) {
+        this._isAuth = true;
+        localStorage.setItem("access", accessToken);
     }
 
-    get username() {
-        return this._username;
-    }
-
-    setAuthType(authType) {
-        this._authType = authType;
-    }
-
-    get authType() {
-        return this._authType;
+    removeAccessToken() {
+        this._isAuth = false;
+        localStorage.removeItem("access");
     }
 }

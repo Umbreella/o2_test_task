@@ -4,7 +4,7 @@ import RoadRoutesForm from "../forms/RoadRoutesForm";
 import {MAIN_ROUTE, USER_PROFILE_ROUTE} from "../../utils/consts";
 import {observer} from "mobx-react";
 import {Context} from "../../index";
-import {NavLink} from "react-router-dom";
+import {NavLink, useNavigate} from "react-router-dom";
 import AuthUserModal from "../modals/AuthUserModal";
 
 const NavigationBar = observer((props) => {
@@ -19,6 +19,7 @@ const NavigationBar = observer((props) => {
 
     const {user} = useContext(Context);
     const [show, setShow] = useState(false);
+    const navigate = useNavigate();
 
     const handleClose = () => {
         setShow(false);
@@ -46,30 +47,41 @@ const NavigationBar = observer((props) => {
                             setTotalTime,
                         }}/>
                     </div>
-                    {
-                        user.isAuth ?
-                            <Navbar.Text>
-                                Вы авторизованы как:&nbsp;
-                                <NavLink to={USER_PROFILE_ROUTE}>
-                                    {user.username}
-                                </NavLink>
-                            </Navbar.Text> :
-                            <>
+                    <div className="ms-lg-4 text-center">
+                        {
+                            user.isAuth ?
                                 <Navbar.Text>
-                                    <Button onClick={handleShow}>
-                                        Войти
-                                    </Button>
-                                </Navbar.Text>
-                                <AuthUserModal
-                                    data={{
-                                        show,
-                                    }}
-                                    func={{
-                                        handleClose,
-                                    }}
-                                />
-                            </>
-                    }
+                                    <Navbar.Text>
+                                        <Button
+                                            onClick={() => navigate(USER_PROFILE_ROUTE)}
+                                            className="w-100"
+                                            variant="dark"
+                                        >
+                                            Профиль
+                                        </Button>
+                                    </Navbar.Text>
+                                </Navbar.Text> :
+                                <>
+                                    <Navbar.Text>
+                                        <Button
+                                            onClick={handleShow}
+                                            className="w-100"
+                                            variant="dark"
+                                        >
+                                            Войти
+                                        </Button>
+                                    </Navbar.Text>
+                                    <AuthUserModal
+                                        data={{
+                                            show,
+                                        }}
+                                        func={{
+                                            handleClose,
+                                        }}
+                                    />
+                                </>
+                        }
+                    </div>
                 </Navbar.Collapse>
             </Container>
         </Navbar>

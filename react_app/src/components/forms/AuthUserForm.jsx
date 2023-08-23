@@ -3,8 +3,9 @@ import {Button, Form, Spinner} from "react-bootstrap";
 import {postLoginData} from "../../http/UserAPI";
 import {Formik} from "formik";
 import * as yup from "yup";
-import jwtDecode from "jwt-decode";
 import {Context} from "../../index";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faGithub} from "@fortawesome/free-brands-svg-icons";
 
 const AuthUserForm = () => {
     const {user} = useContext(Context);
@@ -30,13 +31,7 @@ const AuthUserForm = () => {
             return null;
         }
 
-        const {username} = jwtDecode(access);
-
-        user.setIsAuth(true);
-        user.setUsername(username);
-        user.setAuthType("JWT");
-
-        localStorage.setItem("access", access);
+        user.setAccessToken(access);
     }
 
     const schema = yup.object().shape({
@@ -117,9 +112,22 @@ const AuthUserForm = () => {
                                         <Button
                                             variant="primary" type="submit"
                                         >
-                                            Войти
+                                            Авторизоваться
                                         </Button>
                                 }
+                                <p className="my-2">
+                                    или
+                                </p>
+                                <div>
+                                    <a href={
+                                        `https://github.com/login/oauth/authorize?client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID}`
+                                    }>
+                                        <Button variant="secondary">
+                                            <FontAwesomeIcon icon={faGithub}/>
+                                            &nbsp; Github
+                                        </Button>
+                                    </a>
+                                </div>
                             </div>
                         </Form>
                     )

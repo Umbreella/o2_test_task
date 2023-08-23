@@ -3,13 +3,13 @@ import axios from "axios";
 const publicHost = axios.create({
     baseURL: process.env.REACT_APP_API_BASE_URL,
     withCredentials: true,
-    timeout: 5000,
+    timeout: 10000,
 })
 
 const authHost = axios.create({
     baseURL: process.env.REACT_APP_API_BASE_URL,
     withCredentials: true,
-    timeout: 5000,
+    timeout: 10000,
 })
 
 authHost.interceptors.request.use(

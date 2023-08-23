@@ -17,23 +17,22 @@ const GeoMarker = (props) => {
     const [isLoadingWeather, setIsLoadingWeather] = useState();
     const [isLoadingElevation, setIsLoadingElevation] = useState();
 
-    const loadTempByGeo = ({lat, lng,}) => {
+    const loadTempByGeo = async ({lat, lng,}) => {
         setIsLoadingWeather(true);
 
-        return axios.get(
+        return await axios.get(
             `https://api.openweathermap.org/data/2.5/weather?units=metric` +
             `&appid=${process.env.REACT_APP_WEATHER_API_KEY}` +
             `&lat=${lat}&lon=${lng}`
         ).then(response => setCurrentWeather(response.data.main.temp));
     }
 
-    const loadElevationByGeo = ({lat, lng,}) => {
+    const loadElevationByGeo = async ({lat, lng,}) => {
         setIsLoadingElevation(true);
 
-        return axios.get(
-            `https://api.open-elevation.com/api/v1/lookup?locations=` +
-            `${lat},${lng}`
-        ).then(response => setCurrentElevation(response.data.results[0].elevation));
+        return await axios.get(
+            `https://api.open-meteo.com/v1/elevation?latitude=${lat}&longitude=${lng}`
+        ).then(response => setCurrentElevation(response.data.elevation));
     }
 
     return (
