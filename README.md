@@ -40,7 +40,7 @@
     * **.env.postgres**
         * POSTGRES_PASSWORD
 
-## Docker (localhost)
+## Docker (for 127.0.0.1)
 
 1. [docker-compose.yaml](docker-demo/docker-compose.yaml)
 
@@ -74,7 +74,7 @@ docker-compose up -d
 3. Open bash in container
 
 ```commandline
-docker exec --it o2_test_task bash
+docker exec -it o2_test_task bash
 ```
 
 4. Restore Database from Backup
@@ -100,19 +100,19 @@ python3 /usr/src/app/manage.py createsuperuser
 * Main
 
 ```jsonpath
-[your_ip_address]/
+127.0.0.1/
 ```
 
 * Django Admin
 
 ```jsonpath
-[your_ip_address]/api/admin/
+127.0.0.1/api/admin/
 ```
 
 * REST-API Docs
 
 ```jsonpath
-[your_ip_address]/api/docs/
+127.0.0.1/api/docs/
 ```
 
 ### Login Data
