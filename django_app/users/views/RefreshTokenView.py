@@ -40,14 +40,14 @@ class RefreshTokenView(TokenRefreshView, OAuthTokenRefreshView):
                 'refresh': response.data['refresh_token'],
             }
 
-        response.set_cookie(**{
-            'key': 'refresh',
-            'value': response.data['refresh'],
-            'path': '/api/users/token',
-            'domain': None,
-            'secure': True,
-            'httponly': True,
-            'samesite': 'strict',
-        })
+            response.set_cookie(**{
+                'key': 'refresh',
+                'value': response.data['refresh'],
+                'path': '/api/users/token',
+                'domain': None,
+                'secure': True,
+                'httponly': True,
+                'samesite': 'strict',
+            })
 
         return response
